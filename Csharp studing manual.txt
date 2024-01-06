@@ -685,5 +685,186 @@ static int Sum(params int[] arrNumbers)
 
 вызов функции  foo(b:5, a:2+)
 
-РЕКУРСИЯ И ПЕРЕПОЛНЕНИЕ СТЕКА
+домашка по рекурсии
+
+1. Вывод массива с помощью рекурсии
+static void OutputArray (int [] arr, int size = 0)
+        {
+            if (size >= arr.Length)
+            {
+                return;
+            }
+
+            System.Console.Write($"{arr[size]} ");
+            size ++;
+            OutputArray(arr, size);
+
+        }
+
+        static void Main()
+        {
+            Random rnd = new Random();
+            int[] arr = new int[5];
+            System.Console.WriteLine("New massive:");
+            for (int i = 0; i < arr.Length; i++)
+            {
+                arr[i] = rnd.Next(0, 10);
+                System.Console.Write($"{arr[i]} ");
+            }
+            System.Console.WriteLine("\nOutput masive: ");
+            OutputArray(arr);
+            //рекурсия
+
+
+        }
+
+2. Найти сумму элементов массива
+ static void OutputArray(int[] arr, int size = 0, int sum = 0)
+        {
+            if (size >= arr.Length)
+            {
+                System.Console.WriteLine($"\nsumm elements in new massive: {sum}");
+                return;
+            }
+
+            System.Console.Write($"{arr[size]} ");
+            sum += arr[size];
+            size++;
+            OutputArray(arr, size, sum);
+
+        }
+
+        static void Main()
+        {
+            Random rnd = new Random();
+            int[] arr = new int[5];
+            int sum = 0;
+            System.Console.WriteLine("\nNew massive:");
+            for (int i = 0; i < arr.Length; i++)
+            {
+                arr[i] = rnd.Next(0, 10);
+                System.Console.Write($"{arr[i]} ");
+                sum += arr[i];
+            }
+
+            System.Console.WriteLine($"\nsumm elements in new massive: {sum}");
+            System.Console.WriteLine("\nOutput masive: ");
+            OutputArray(arr);
+        }
+
+3. Найти сумму цифр числа
+ static int OutputSum(int number)
+        {
+            if (number < 10)
+            {
+                return number; 
+            }
+
+            
+
+            return number% 10 + OutputSum(number /10);
+            
+        }
+
+        static void Main()
+        {
+            
+            int sum = 999;
+            System.Console.WriteLine($"Number, which one figure will be summing: {sum}");
+            System.Console.WriteLine($"sum figures was counting : {OutputSum(sum)}");
+            
+        }
+
+
+
+преобразование типов
+
+
+static void Main()
+        {
+            //примеры преобразования 
+            //Нельзя:
+            //double в float (из-за разного диапазона значений)
+            //double a = 5.3;
+            //float b = a;
+            //строку преобразовать к числовому типу данных
+            //string s = "5";
+            //int j = (int)s;
+            //при этом любое другое значение можно преобразовать в строку, так можно сделать только с помощью "Convert" или "parce"
+            //явное (explicit) - с ужающие, если область значений типа данных меньше, чем у преобразуемого (у расширающего - наоборот, и там происходит неявное приведение)
+            double a = 5.3;
+            float b = (float)a;
+            //создание переменной типа float и присвоение ей значниия (явное) (пояснение: без 'f' или явного простого преобразования система принимает числа с плавающей точкой за double)
+            float h = 2.5f;
+            //предение к bool (это возможно сделать с помощью сторонних классов, типа Convert)
+            bool d  = Convert.ToBoolean(a);
+
+            //неявное
+            byte c = 1;
+            int g = c;
+            //при мат действиях (преобразовывается в наиболее точный тип данных, те в тот у которого больше диапазон значений)
+            float k = h + g;
+        }
+
+
+арифметическое переполнение
+
+
+static void Main()
+        {
+            //арифметическое переполнение
+            //если вычесть из числа минимальной границы типа данных или прибавить к числу максимальной границы типа данных 1, то мнимальзное знчаение станет максимальным, а максимальное минимальным
+            //пример (это работает со всеми целочисленными типами данных)
+            System.Console.WriteLine("Exemple maximals overflow type data:");
+            int a = int.MaxValue;
+            System.Console.WriteLine(a); 
+            a +=1;
+            System.Console.WriteLine(a);
+
+            System.Console.WriteLine("Exemple minimals overflow data type:");
+            int b = int.MinValue;
+            System.Console.WriteLine(b);
+            b += 1;
+            System.Console.WriteLine(b);
+
+            //проверка переполнения
+            //это делается программно, либо с помощью команды "checked" (ключевое слово "unchecked" выключает данную проверку)
+            //exemple
+            b = checked(b + 1);
+            //or
+            checked
+            {
+                a +=1;
+            }
+
+
+            //using try catch to check overflow data type
+            byte c =1;
+            byte d = 2;
+            
+            try
+            {
+                byte agr = unchecked((byte)(c - d));
+            }
+            catch (OverflowException)
+            {
+                System.Console.WriteLine("Overflow exception!");
+            }
+
+
+            //arithmetic operation with real numbers never cant call overflow
+            //necessary using "isinfinity" to checked double data type in overflow with infinity
+            double l = 1.00/0.00;
+            System.Console.WriteLine(double.IsInfinity(l));
+
+            //necessary using "isnan" to checked double data type in overflow with uncertainty
+            double g = 0.00/0.00;
+            System.Console.WriteLine(double.IsNaN(g));
+
+            //overflow in decimal data type only calling exception
+            decimal w = decimal.MaxValue;
+            decimal e = decimal.MaxValue;
+            decimal r = w + e;
+
+        }
 
